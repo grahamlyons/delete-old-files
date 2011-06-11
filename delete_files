@@ -18,7 +18,7 @@ def delete_oldest_files(sorted_files, keep = 3):
     delete = len(sorted_files) - keep
     for x in range(0, delete):
         print "Deleting: " + sorted_files[x][0]
-        os.remove(sortedFiles[x][0])
+        os.remove(sorted_files[x][0])
 
 def print_usage():
     """ Print the usage message for the script. """
