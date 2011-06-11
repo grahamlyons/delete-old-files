@@ -1,24 +1,45 @@
+#! /usr/bin/env python
 from operator import itemgetter, attrgetter
-import glob, os
+import glob, os, sys
 
-# The directory (and optionally the file extension/pattern) to search.
-#fpath=""
+def sort_files_by_last_modified(files):
+    """ Given a list of files, return them sorted by the last
+         modified times. """
+    fileData = {}
+    for fname in files:
+        fileData[fname] = os.stat(fname).st_mtime
 
-# The number of files to keep.
-keep = 3
+    fileData = sorted(fileData.items(), key = itemgetter(1))
+    return fileData 
 
-fileDir=glob.glob(fpath)
+def delete_oldest_files(sorted_files, keep = 3):
+    """ Given a list of files sorted by last modified time and a number to 
+        keep, delete the oldest ones. """
+    delete = len(sorted_files) - keep
+    for x in range(0, delete):
+        print "Deleting: " + sorted_files[x][0]
+        os.remove(sortedFiles[x][0])
 
-# Get the last modification time for each of the files.
-fileData = {}
-for fname in fileDir:
-	fileData[fname] = os.stat(fname).st_mtime
+def print_usage():
+    """ Print the usage message for the script. """
+    print """Deletes files other than the most recent.
+Usage:
+    delete_files '/path/to/files/pre_*.ext' <num_to_keep default=3>
+
+    e.g. delete_files '/home/boggins/pictures/*.jpg' 5
+
+delete_files -h prints this message.
+    """
+
+if len(sys.argv) < 2 or sys.argv[1] == '-h':
+    print_usage()
+    sys.exit(1)
+
+# Find all files matching the path.
+file_paths = glob.glob(sys.argv[1])
 
 # Sort the files according to the last modification time.
-sortedFiles = sorted(fileData.items(), key=itemgetter(1))
+sorted_files = sort_files_by_last_modified(file_paths)
 
-# Keep the latest files (number defined at the top of the file, 
-# so loop over a range of the number of files minus the number we're keeping.
-delete = len(sortedFiles) - keep
-for x in range(0, delete):
-	os.remove(sortedFiles[x][0]
+delete_oldest_files(sorted_files)
+
