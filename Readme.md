@@ -11,5 +11,6 @@ Usage:
     e.g. delete_files '/home/boggins/pictures/*.jpg' 5
 
 To show help:
+
     delete_files -h
 
