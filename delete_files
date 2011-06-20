@@ -35,6 +35,11 @@ if len(sys.argv) < 2 or sys.argv[1] == '-h':
     print_usage()
     sys.exit(1)
 
+keep = 3
+
+if len(sys.argv) > 2:
+    keep = sys.argv[2]
+
 # Find all files matching the path.
 file_paths = glob.glob(sys.argv[1])
 
