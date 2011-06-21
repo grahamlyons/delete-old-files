@@ -38,7 +38,7 @@ if len(sys.argv) < 2 or sys.argv[1] == '-h':
 keep = 3
 
 if len(sys.argv) > 2:
-    keep = sys.argv[2]
+    keep = int(sys.argv[2])
 
 # Find all files matching the path.
 file_paths = glob.glob(sys.argv[1])
@@ -46,5 +46,5 @@ file_paths = glob.glob(sys.argv[1])
 # Sort the files according to the last modification time.
 sorted_files = sort_files_by_last_modified(file_paths)
 
-delete_oldest_files(sorted_files)
+delete_oldest_files(sorted_files, keep)
 
